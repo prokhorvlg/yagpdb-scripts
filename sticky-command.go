@@ -43,6 +43,8 @@ Permissions available: Administrator, ManageServer, ReadMessages, SendMessages, 
 			{{/* if there is a second arg for body, */}}
 			{{if ($args.Get 1)}}
 				{{/* set the sticky! */}}
+				{{/* set the indelay flag to false */}}
+				{{dbSet .Channel.ID "indelay" false}}
 				{{/* set image to empty */}}
 				{{$img := ""}}
 				{{/* set text to second argument */}}

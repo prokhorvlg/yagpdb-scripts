@@ -8,18 +8,21 @@
 	Modified by prokhorVLG
 */}}
 
+{{/* delay constant in seconds, todo: turn this into a setting */}}
+{{$delay := 5}}
+
 {{/* if sticky message exists, */}}
 {{if (dbGet .Channel.ID "stickymessage")}}
-	{{/* grab the sticky message from storage by key */}}
-	{{$db := (dbGet .Channel.ID "stickymessage").Value}}
-	{{/* set message value */}}
-	{{$message := $db.message}}
-	{{/* delete the old sticky message based on key */}}
-	{{if $db := dbGet .Channel.ID "smchannel"}}
-		{{deleteMessage nil (toInt $db.Value) 0}}
+	{{/* if the message is currently NOT being delayed, */}}
+	{{if (dbGet .Channel.ID "indelay"|not)}}
+		{{/* set delay to true for this channel */}}
+		{{dbSet .Channel.ID "indelay" true}}
+		{{/* delay the message using a custom command */}}
+		{{scheduleUniqueCC MESSAGE-COMMAND .Channel.ID $delay "stickydelayfunction" "input data"}}
+	{{/* if the message IS currently being delayed, */}}
+	{{else}}
+		{{/* reset the execCC so the duration is reset */}}
+		{{cancelScheduledUniqueCC MESSAGE-COMMAND "stickydelayfunction"}}
+		{{scheduleUniqueCC MESSAGE-COMMAND .Channel.ID $delay "stickydelayfunction" "input data"}}
 	{{end}}
-	{{/* send message to channel, and saves the id for the message in variable */}}
-	{{$id := sendMessageRetID nil $message}}
-	{{/* save, to the channel's metadata, the key of the message */}}
-	{{dbSet .Channel.ID "smchannel" (str $id)}}
 {{end}}
