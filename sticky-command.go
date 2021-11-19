@@ -118,8 +118,9 @@ Permissions available: Administrator, ManageServer, ReadMessages, SendMessages, 
 			"**`-sticky set <body>`**: Set a sticky message for this channel. This will overwrite an existing sticky.\n"
 			"**`-sticky reset`**: Remove the sticky message for this channel.\n"
 			"**`-sticky delay <seconds>`**: Customize the timed delay for the sticky message. Must be an integer 1 or above.\n"
-			"**`-sticky pause`**: Pause the sticky effect without removing the sticky message.\n"
-			"**`-sticky play`**: Restart the sticky effect that was previously paused.")
+			"**`-sticky pause`**: [TO-DO] Pause the sticky effect without removing the sticky message.\n"
+			"**`-sticky play`**: [TO-DO] Restart the sticky effect that was previously paused.\n"
+			"**`-sticky set-embed <json>`**: [TO-DO] Set a fancy embed sticky message for this channel using a json structure.\n")
 			"color" $color
 			"author" (sdict "name" (print "Sticky Messages") "icon_url" "https://cdn.discordapp.com/emojis/587253903121448980.png")
 		)}}
