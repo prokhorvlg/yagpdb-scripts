@@ -8,21 +8,23 @@
 	Modified by prokhorVLG
 */}}
 
-{{/* delay constant in seconds, todo: turn this into a setting */}}
-{{$delay := 5}}
-
 {{/* if sticky message exists, */}}
 {{if (dbGet .Channel.ID "stickymessage")}}
 	{{/* if the message is currently NOT being delayed, */}}
 	{{if (dbGet .Channel.ID "indelay"|not)}}
 		{{/* set delay to true for this channel */}}
 		{{dbSet .Channel.ID "indelay" true}}
+		{{/* get the delay duration from the channel metadata */}}
+		{{$delay := (dbGet .Channel.ID "delayduration").Value}}
 		{{/* delay the message using a custom command */}}
-		{{scheduleUniqueCC MESSAGE-COMMAND .Channel.ID $delay "stickydelayfunction" "input data"}}
+		{{scheduleUniqueCC 4 .Channel.ID $delay .Channel.ID "input data"}}
 	{{/* if the message IS currently being delayed, */}}
 	{{else}}
-		{{/* reset the execCC so the duration is reset */}}
-		{{cancelScheduledUniqueCC MESSAGE-COMMAND "stickydelayfunction"}}
-		{{scheduleUniqueCC MESSAGE-COMMAND .Channel.ID $delay "stickydelayfunction" "input data"}}
+		{{/* cancel the previous operation to stop it from happening */}}
+		{{cancelScheduledUniqueCC 4 .Channel.ID}}
+		{{/* get the delay duration from the channel metadata */}}
+		{{$delay := (dbGet .Channel.ID "delayduration").Value}}
+		{{/* start a new operation so the delay is reset */}}
+		{{scheduleUniqueCC 4 .Channel.ID $delay .Channel.ID "input data"}}
 	{{end}}
 {{end}}
