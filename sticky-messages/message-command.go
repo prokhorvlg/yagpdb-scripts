@@ -1,7 +1,11 @@
-
 {{/*
+	STICKY MESSAGES: Message Command
+	Written by prokhorVLG
+	Modified from Black Wolf's work, from https://github.com/BlackWolfWoof/yagpdb-cc/
+
 	Trigger type: None
-	by prokhorVLG
+	
+	This command is triggered by the regex command to actually post the sticky message.
 */}}
 
 {{/* grab the sticky message from storage by key */}}

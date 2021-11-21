@@ -1,11 +1,12 @@
 {{/*
+	STICKY MESSAGES: Regex Command
+	Written by prokhorVLG
+	Modified from Black Wolf's work, from https://github.com/BlackWolfWoof/yagpdb-cc/
+
 	Trigger type: Regex
 	Trigger: \A
-
-	Copyright (c): Black Wolf, 2021
-	License: MIT
-	Repository: https://github.com/BlackWolfWoof/yagpdb-cc/
-	Modified by prokhorVLG
+	
+	This command detects any message in a channel and starts a countdown to posting the sticky message.
 */}}
 
 {{/* if sticky message exists, */}}
